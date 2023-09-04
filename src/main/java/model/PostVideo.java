@@ -1,11 +1,11 @@
 package model;
 
-public class Video {
+public class PostVideo extends PostContent {
     private String title;
     private int quality;
     private int length;
 
-    public Video(String title, int quality, int length) {
+    public PostVideo(String title, int quality, int length) {
         this.title = title;
         this.quality = quality;
         this.length = length;

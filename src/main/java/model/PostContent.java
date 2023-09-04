@@ -1,2 +1,4 @@
-package model;public class PostContent {
+package model;
+
+public abstract class PostContent {
 }

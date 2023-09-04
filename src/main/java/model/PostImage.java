@@ -1,11 +1,11 @@
 package model;
 
-public class Image {
+public class PostImage extends PostContent {
     private String title;
     private int width;
     private int height;
 
-    public Image(String title, int width, int height) {
+    public PostImage(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
