@@ -12,13 +12,12 @@ public class Post {
      */
 
     private LocalDateTime publicationdate;
-    private List<Post> comments;
-    private String text;
-    private Image image;
-    private Video video;
+    private PostContent postContent;
+    private List<Comment> comments;
 
-    public Post(LocalDateTime publicationdate) {
+    public Post(LocalDateTime publicationdate, PostContent postContent) {
         this.publicationdate = publicationdate;
+        this.postContent = postContent;
     }
 
     public LocalDateTime getPublicationdate() {
@@ -29,19 +28,23 @@ public class Post {
         this.publicationdate = publicationdate;
     }
 
-    public List<Post> getComments() {
+    public PostContent getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(PostContent postContent) {
+        this.postContent = postContent;
+    }
+
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public String getText() {
-        return text;
+    public void addComment(Comment c){
+        this.comments.add(c);
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public Video getVideo() {
-        return video;
+    public void removeComment(Comment c) {
+        this.comments.remove(c);
     }
 }
