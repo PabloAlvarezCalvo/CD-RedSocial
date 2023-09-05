@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Comment {
     private LocalDateTime publicationDate;
@@ -35,5 +36,15 @@ public class Comment {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        return "Comment{" +
+                "[" + publicationDate.format(formatter) +
+                "]" + owner.getName() + ": " + text +
+                '}';
     }
 }
