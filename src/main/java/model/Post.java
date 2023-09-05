@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Post {
@@ -14,12 +13,15 @@ public class Post {
      * o un vídeo (que tendrá título, calidad y duración en segundos).
      */
 
+    private User owner;
+
     private LocalDateTime publicationdate;
     private PostContent postContent;
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(LocalDateTime publicationdate, PostContent postContent) {
+    public Post(LocalDateTime publicationdate, User owner, PostContent postContent) {
         this.publicationdate = publicationdate;
+        this.owner = owner;
         this.postContent = postContent;
     }
 
@@ -50,6 +52,8 @@ public class Post {
     public void removeComment(Comment c) {
         this.comments.remove(c);
     }
+
+    public void removeAllComments(){ this.comments = new ArrayList<>(); }
 
     public int shotCommentCount(){
         return comments.size();
