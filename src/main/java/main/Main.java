@@ -20,7 +20,7 @@ public class Main {
     }
 
     //region Create User
-    private static List<User> createUsers(){
+    private static List<User> createUsers() {
         List<User> users = new ArrayList<>();
 
         User paco = new User("Paco");
@@ -38,50 +38,66 @@ public class Main {
         users.add(conchi);
         users.add(alex);
 
-        Post post1 = new Post(LocalDateTime.now(), paco, new PostText("My first post!"));
-        paco.getPosts().add(post1);
+        try {
 
-        Post post2 = new Post(LocalDateTime.now(), paco, new PostText("My 2nd post!"));
-        paco.getPosts().add(post2);
+            Post post1 = new Post(LocalDateTime.now(), paco, new PostText("My first post!"));
+            paco.getPosts().add(post1);
+            Thread.sleep(100);
 
-        Post post3 = new Post(LocalDateTime.now(), paco, new PostText("My 3rd post!"));
-        paco.getPosts().add(post3);
+            Post post2 = new Post(LocalDateTime.now(), paco, new PostText("My 2nd post!"));
+            paco.getPosts().add(post2);
+            Thread.sleep(100);
 
-        Post post4 = new Post(LocalDateTime.now(), paco, new PostText("My 4th post!"));
-        paco.getPosts().add(post4);
+            Post post3 = new Post(LocalDateTime.now(), paco, new PostText("My 3rd post!"));
+            paco.getPosts().add(post3);
+            Thread.sleep(100);
 
-        Post post5 = new Post(LocalDateTime.now(), paco, new PostText("My 5th post!"));
-        paco.getPosts().add(post5);
+            Post post4 = new Post(LocalDateTime.now(), paco, new PostText("My 4th post!"));
+            paco.getPosts().add(post4);
+            Thread.sleep(100);
 
-        Post post6 = new Post(LocalDateTime.now(), paco, new PostText("My 6th post!"));
-        paco.getPosts().add(post6);
+            Post post5 = new Post(LocalDateTime.now(), paco, new PostText("My 5th post!"));
+            paco.getPosts().add(post5);
+            Thread.sleep(100);
 
-        Post post7 = new Post(LocalDateTime.now(), paco, new PostText("My 7th post!"));
-        paco.getPosts().add(post7);
+            Post post6 = new Post(LocalDateTime.now(), paco, new PostText("My 6th post!"));
+            paco.getPosts().add(post6);
+            Thread.sleep(100);
 
-        Post post8 = new Post(LocalDateTime.now(), paco, new PostText("My 8th post!"));
-        paco.getPosts().add(post8);
+            Post post7 = new Post(LocalDateTime.now(), paco, new PostText("My 7th post!"));
+            paco.getPosts().add(post7);
+            Thread.sleep(100);
 
-        Post post9 = new Post(LocalDateTime.now(), paco, new PostText("My 9th post!"));
-        paco.getPosts().add(post9);
+            Post post8 = new Post(LocalDateTime.now(), paco, new PostText("My 8th post!"));
+            paco.getPosts().add(post8);
+            Thread.sleep(100);
 
-        Post post10 = new Post(LocalDateTime.now(), paco, new PostText("My 10th post!"));
-        paco.getPosts().add(post10);
+            Post post9 = new Post(LocalDateTime.now(), paco, new PostText("My 9th post!"));
+            paco.getPosts().add(post9);
+            Thread.sleep(100);
 
-        Post post11 = new Post(LocalDateTime.now(), paco, new PostText("My 11th post!"));
-        paco.getPosts().add(post11);
+            Post post10 = new Post(LocalDateTime.now(), paco, new PostText("My 10th post!"));
+            paco.getPosts().add(post10);
+            Thread.sleep(100);
 
-        Post post12 = new Post(LocalDateTime.now(), paco, new PostText("My 12th post!"));
-        paco.getPosts().add(post2);
+            Post post11 = new Post(LocalDateTime.now(), paco, new PostText("My 11th post!"));
+            paco.getPosts().add(post11);
+            Thread.sleep(100);
 
-        Comment comment1 = new Comment(LocalDateTime.now(), "That's a great post!", conchi);
-        post1.addComment(comment1);
+            Post post12 = new Post(LocalDateTime.now(), paco, new PostText("My 12th post!"));
+            paco.getPosts().add(post12);
+            Thread.sleep(100);
 
-        Comment comment2 = new Comment(LocalDateTime.now(), "This is getting repetitive", conchi);
-        post5.addComment(comment2);
+            Comment comment1 = new Comment(LocalDateTime.now(), "That's a great post!", conchi);
+            post1.addComment(comment1);
 
-        Comment comment3 = new Comment(LocalDateTime.now(), "/unfollow", conchi);
-        post12.addComment(comment3);
+            Comment comment2 = new Comment(LocalDateTime.now(), "This is getting repetitive", conchi);
+            post5.addComment(comment2);
+
+
+            Comment comment3 = new Comment(LocalDateTime.now(), "/unfollow", conchi);
+            post12.addComment(comment3);
+        } catch (Exception ex) {}
 
         return users;
     }
@@ -218,7 +234,7 @@ public class Main {
         List<Post> availablePost = new ArrayList<>();
 
         System.out.println("----------------------------------------");
-        System.out.println("Feed for " + user.getPosts());
+        System.out.println("Feed for " + user.getName());
         System.out.println("----------------------------------------");
 
         for (User following : user.getFollowing()){
