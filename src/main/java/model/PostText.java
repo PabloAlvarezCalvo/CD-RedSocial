@@ -14,4 +14,9 @@ public class PostText extends PostContent {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return "Text: \n" + text;
+    }
 }

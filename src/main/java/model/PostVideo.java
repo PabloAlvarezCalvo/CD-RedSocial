@@ -34,4 +34,13 @@ public class PostVideo extends PostContent {
     public void setLength(int length) {
         this.length = length;
     }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "title='" + title + '\'' +
+                ", quality=" + quality +
+                ", length=" + length +
+                '}';
+    }
 }

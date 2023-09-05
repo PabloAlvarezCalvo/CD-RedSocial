@@ -34,4 +34,13 @@ public class PostImage extends PostContent {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    @Override
+    public String toString() {
+        return "PostImage{" +
+                "title='" + title + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }

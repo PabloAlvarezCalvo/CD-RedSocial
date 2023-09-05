@@ -1,6 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Post {
@@ -13,7 +16,7 @@ public class Post {
 
     private LocalDateTime publicationdate;
     private PostContent postContent;
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public Post(LocalDateTime publicationdate, PostContent postContent) {
         this.publicationdate = publicationdate;
@@ -46,5 +49,19 @@ public class Post {
 
     public void removeComment(Comment c) {
         this.comments.remove(c);
+    }
+
+    public int shotCommentCount(){
+        return comments.size();
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        return "Post\n" +
+                "[" + publicationdate.format(formatter) + "] " +
+                postContent + "\n" +
+                "Comments:\n" + comments.toString();
     }
 }
