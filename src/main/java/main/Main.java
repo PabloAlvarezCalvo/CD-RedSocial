@@ -5,7 +5,6 @@ import util.Input;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -133,7 +132,7 @@ public class Main {
 
     //region Add user
     private static void addUser(){
-        User user = new User(Input.string("Type the name of the user"));
+        User user = new User(Input.string("Type the name of the user:\n"));
 
         users.add(user);
 
@@ -167,16 +166,17 @@ public class Main {
         do {
             System.out.println("----------------------------------------");
             System.out.println("1.- See last posts from users followed.");
-            System.out.println("2.- Add a post.");
-            System.out.println("3.- Add a comment.");
-            System.out.println("4.- Unfollow an user.");
-            System.out.println("5.- Follow an user.");
-            System.out.println("6.- List all posts from an user.");
-            System.out.println("7.- List all comments from an user.");
-            System.out.println("8.- Delete posts from this user.");
-            System.out.println("9.- Delete comments from this user.");
-            System.out.println("10.- Select another user.");
-            System.out.println("11.- Exit.");
+            System.out.println("2.- Suggested users to follow.");
+            System.out.println("3.- Add a post.");
+            System.out.println("4.- Add a comment.");
+            System.out.println("5.- Unfollow an user.");
+            System.out.println("6.- Follow an user.");
+            System.out.println("7.- List all posts from this user.");
+            System.out.println("8.- List all comments from this user.");
+            System.out.println("9.- Delete posts from this user.");
+            System.out.println("10.- Delete comments from this user.");
+            System.out.println("11.- Select another user.");
+            System.out.println("12.- Exit.");
             option = Input.integer();
 
             switch (option) {
@@ -184,40 +184,43 @@ public class Main {
                 case 1: getLastPosts(user);
                     break;
 
-                case 2: addPost(user);
+                case 2: usersSuggestions(user);
                     break;
 
-                case 3: addComment(user);
+                case 3: addPost(user);
                     break;
 
-                case 4: unfollowUser(user);
+                case 4: addComment(user);
                     break;
 
-                case 5: followUser(user);
+                case 5: unfollowUser(user);
                     break;
 
-                case 6: listPostsFromUser(user);
+                case 6: followUser(user);
                     break;
 
-                case 7: listCommentsFromUser(user);
+                case 7: listPostsFromUser(user);
                     break;
 
-                case 8: deletePostByUser(user);
+                case 8: listCommentsFromUser(user);
                     break;
 
-                case 9: deleteCommentByUser(user);
+                case 9: deletePostByUser(user);
                     break;
 
-                case 10: return true;
+                case 10: deleteCommentByUser(user);
+                    break;
 
-                case 11:
+                case 11: return true;
+
+                case 12:
                     break;
 
                 default:
                     System.out.println("Invalid option.");
                     break;
             }
-        } while (option != 11);
+        } while (option != 12);
 
         return false;
 
@@ -251,6 +254,22 @@ public class Main {
     }
     //endregion
 
+    //region Users Suggestions
+    private static void usersSuggestions(User user){
+        System.out.println("Suggested users to follow:");
+
+        List<User> suggestedUsers = new ArrayList<>();
+
+        for (User u : user.getFollowing()){
+            suggestedUsers.addAll(u.getFollowing());
+        }
+
+        for (User u : suggestedUsers){
+            System.out.println(u.getName());
+        }
+    }
+    //endregion
+
     //region Add Post
     private static void addPost(User user){
         System.out.println("Select the type of post:");
@@ -269,8 +288,8 @@ public class Main {
 
             case 2:
                 String imageTitle = Input.string("Write the title of the image:\n");
-                int width = Input.integer("Write the width of the image:");
-                int height = Input.integer("Write the height of the image:");
+                int width = Input.integer("Write the width of the image:\n");
+                int height = Input.integer("Write the height of the image:\n");
 
                 pc = new PostImage(imageTitle, width, height);
 
