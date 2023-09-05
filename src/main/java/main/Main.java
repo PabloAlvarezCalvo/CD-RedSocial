@@ -5,12 +5,13 @@ import util.Input;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     private static List<User> users;
-    private static List<Post> posts = new ArrayList<>();
-    private static List<Comment> comments = new ArrayList<>();
 
     public static void main(String[] args) {
         users = createUsers();
@@ -39,11 +40,48 @@ public class Main {
 
         Post post1 = new Post(LocalDateTime.now(), paco, new PostText("My first post!"));
         paco.getPosts().add(post1);
-        posts.add(post1);
+
+        Post post2 = new Post(LocalDateTime.now(), paco, new PostText("My 2nd post!"));
+        paco.getPosts().add(post2);
+
+        Post post3 = new Post(LocalDateTime.now(), paco, new PostText("My 3rd post!"));
+        paco.getPosts().add(post3);
+
+        Post post4 = new Post(LocalDateTime.now(), paco, new PostText("My 4th post!"));
+        paco.getPosts().add(post4);
+
+        Post post5 = new Post(LocalDateTime.now(), paco, new PostText("My 5th post!"));
+        paco.getPosts().add(post5);
+
+        Post post6 = new Post(LocalDateTime.now(), paco, new PostText("My 6th post!"));
+        paco.getPosts().add(post6);
+
+        Post post7 = new Post(LocalDateTime.now(), paco, new PostText("My 7th post!"));
+        paco.getPosts().add(post7);
+
+        Post post8 = new Post(LocalDateTime.now(), paco, new PostText("My 8th post!"));
+        paco.getPosts().add(post8);
+
+        Post post9 = new Post(LocalDateTime.now(), paco, new PostText("My 9th post!"));
+        paco.getPosts().add(post9);
+
+        Post post10 = new Post(LocalDateTime.now(), paco, new PostText("My 10th post!"));
+        paco.getPosts().add(post10);
+
+        Post post11 = new Post(LocalDateTime.now(), paco, new PostText("My 11th post!"));
+        paco.getPosts().add(post11);
+
+        Post post12 = new Post(LocalDateTime.now(), paco, new PostText("My 12th post!"));
+        paco.getPosts().add(post2);
 
         Comment comment1 = new Comment(LocalDateTime.now(), "That's a great post!", conchi);
         post1.addComment(comment1);
-        comments.add(comment1);
+
+        Comment comment2 = new Comment(LocalDateTime.now(), "This is getting repetitive", conchi);
+        post5.addComment(comment2);
+
+        Comment comment3 = new Comment(LocalDateTime.now(), "/unfollow", conchi);
+        post12.addComment(comment3);
 
         return users;
     }
@@ -54,6 +92,7 @@ public class Main {
         int option;
 
         do {
+            System.out.println("----------------------------------------");
             System.out.println("Select an option:");
             System.out.println("1.- Add an user.");
             System.out.println("2.- Select an user.");
@@ -65,10 +104,14 @@ public class Main {
                 case 1: addUser();
                     break;
 
-                case 2: userActions(selectUser());
+                case 2:
+                        boolean repeat;
+                        do {
+                            repeat = userActions(selectUser());
+                        } while (repeat);
                     break;
             }
-        } while (option != 9);
+        } while (option != 3);
     }
     //endregion
 
@@ -102,42 +145,45 @@ public class Main {
 
     //region User Actions
     //region User Actions Menu
-    private static void userActions(User user){
+    private static boolean userActions(User user){
         int option;
 
         do {
-            System.out.println("1.- Add a post.");
-            System.out.println("2.- Add a comment.");
-            System.out.println("3.- Unfollow an user.");
-            System.out.println("4.- Follow an user.");
-            System.out.println("5.- List all posts from an user.");
-            System.out.println("6.- List all comments from an user.");
-            System.out.println("7.- Show number of comments in a post.");
-            System.out.println("8.- Delete comments from this user.");
-            System.out.println("9.- Delete posts from this user.");
-            System.out.println("10.- Exit");
+            System.out.println("----------------------------------------");
+            System.out.println("1.- See last posts from users followed.");
+            System.out.println("2.- Add a post.");
+            System.out.println("3.- Add a comment.");
+            System.out.println("4.- Unfollow an user.");
+            System.out.println("5.- Follow an user.");
+            System.out.println("6.- List all posts from an user.");
+            System.out.println("7.- List all comments from an user.");
+            System.out.println("8.- Delete posts from this user.");
+            System.out.println("9.- Delete comments from this user.");
+            System.out.println("10.- Select another user.");
+            System.out.println("11.- Exit.");
             option = Input.integer();
 
             switch (option) {
 
-                case 1: addPost(user);
+                case 1: getLastPosts(user);
                     break;
 
-                case 2: addComment(user);
-                    break;
-                case 3: unfollowUser(user);
+                case 2: addPost(user);
                     break;
 
-                case 4: followUser(user);
+                case 3: addComment(user);
                     break;
 
-                case 5: listPostsFromUser(user);
+                case 4: unfollowUser(user);
                     break;
 
-                case 6: listCommentsFromUser(user);
+                case 5: followUser(user);
                     break;
 
-                case 7: showCommentCount();
+                case 6: listPostsFromUser(user);
+                    break;
+
+                case 7: listCommentsFromUser(user);
                     break;
 
                 case 8: deletePostByUser(user);
@@ -146,15 +192,46 @@ public class Main {
                 case 9: deleteCommentByUser(user);
                     break;
 
-                case 10:
+                case 10: return true;
+
+                case 11:
                     break;
 
                 default:
                     System.out.println("Invalid option.");
                     break;
             }
-        } while (option != 10);
+        } while (option != 11);
 
+        return false;
+
+    }
+    //endregion
+
+    //region Get last posts
+
+    /**
+     * Displays the latest (ordered by date) 10 posts the user can see from among the people they follows
+     * @param user
+     */
+    private static void getLastPosts(User user){
+        List<Post> availablePost = new ArrayList<>();
+
+        System.out.println("----------------------------------------");
+        System.out.println("Feed for " + user.getPosts());
+        System.out.println("----------------------------------------");
+
+        for (User following : user.getFollowing()){
+            availablePost.addAll(following.getPosts());
+        }
+
+        List<Post> sortedPosts = availablePost.stream()
+                .sorted(Comparator.comparing(Post::getPublicationdate).reversed())
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 10 && i < sortedPosts.size(); i++){
+            System.out.println(sortedPosts.get(i));
+        }
     }
     //endregion
 
@@ -188,7 +265,7 @@ public class Main {
                 int quality = Input.integer("Write the quality of the video:\n");
                 int length = Input.integer("Write the length of the video:\n");
 
-                PostVideo video = new PostVideo(videoTitle, quality, length);
+                pc = new PostVideo(videoTitle, quality, length);
 
                 break;
         }
@@ -196,7 +273,6 @@ public class Main {
         Post post = new Post(LocalDateTime.now(), user, pc);
 
         user.makePost(post);
-        posts.add(post);
     }
     //endregion
 
@@ -257,41 +333,52 @@ public class Main {
     //endregion
 
     //region List Posts
-    private static void listPostsFromUser(User u) {
-        for (Post p : u.getPosts()){
+    private static void listPostsFromUser(User user) {
+        for (Post p : user.getPosts()){
             System.out.println(p);
         }
     }
     //endregion
 
     //region List Comments
-    private static void listCommentsFromUser(User u){
-        for(Comment c : comments){
-            if (c.getOwner().getName().equals(u.getName())){
-                System.out.println(c);
+    private static void listCommentsFromUser(User user){
+        List<Comment> commentsFromUser = new ArrayList<>();
+
+        for (User u : users){
+            for (Post p : u.getPosts()){
+                for (Comment c : p.getComments()) {
+                    if (c.getOwner().getName().equals(user.getName())){
+                        commentsFromUser.add(c);
+                    }
+                }
+            }
+        }
+
+        System.out.println("----------------------------------------");
+        System.out.println("Comments from user: " + user.getName());
+        System.out.println("----------------------------------------");
+        for (Comment c : commentsFromUser){
+            System.out.println(c.toString());
+        }
+    }
+    //endregion
+
+    //region Delete post by user
+    private static void deletePostByUser(User user){
+        user.removePosts();
+    }
+    //endregion
+
+    //region Delete comments by user
+    private static void deleteCommentByUser(User user){
+        for (User u : users) {
+            for (Post p : u.getPosts()){
+                p.getComments().removeIf(c -> c.getOwner().getName().equals(user.getName()));
             }
         }
     }
     //endregion
 
-    //region Show comment count
-    private static void showCommentCount(){
-
-    }
     //endregion
-
-    //endregion
-
-    private static void deletePostByUser(User u){
-        for (Post p : u.getPosts()){
-            posts.remove(p);
-        }
-
-        u.removePosts();
-    }
-
-    private static void deleteCommentByUser(User u){
-        comments.removeIf(c -> c.getOwner() == u);
-    }
 
 }

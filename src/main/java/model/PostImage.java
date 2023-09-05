@@ -37,10 +37,9 @@ public class PostImage extends PostContent {
 
     @Override
     public String toString() {
-        return "PostImage{" +
-                "title='" + title + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
+        return "Image. " +
+                "Title: " + title +
+                ", width: " + width +
+                ", height: " + height;
     }
 }

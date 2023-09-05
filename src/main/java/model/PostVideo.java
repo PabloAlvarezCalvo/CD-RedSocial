@@ -37,10 +37,9 @@ public class PostVideo extends PostContent {
 
     @Override
     public String toString() {
-        return "Video{" +
-                "title='" + title + '\'' +
-                ", quality=" + quality +
-                ", length=" + length +
-                '}';
+        return "Video. " +
+                "Title: " + title +
+                ", quality: " + quality +
+                ", length: " + length / 3600 + ":" + ((length % 3600) / 60) + ":" + length % 60;
     }
 }
