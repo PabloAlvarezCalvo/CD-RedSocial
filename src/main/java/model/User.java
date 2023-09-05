@@ -40,8 +40,27 @@ public class User {
     public void makePost(Post p){
         posts.add(p);
     }
+    public void removePost(Post postToDelete){
+        for (Post p : posts){
+            if (p == postToDelete){
+                if (p.getComments().size() > 0){
+                    p.removeAllComments();
+                }
+            }
+        }
+        posts.removeIf(p -> p == postToDelete);
+    }
     public void removePosts(){
         posts = new ArrayList<>();
+    }
+
+    public List<Post> getFollowingPosts(){
+        List<Post> followingPosts = new ArrayList<>();
+
+        for (User u : following) {
+            followingPosts.addAll(u.getPosts());
+        }
+            return followingPosts;
     }
 
     @Override
