@@ -250,6 +250,7 @@ public class Main {
 
         for (int i = 0; i < 10 && i < sortedPosts.size(); i++){
             System.out.println(sortedPosts.get(i));
+            System.out.println("----------");
         }
     }
     //endregion
@@ -371,6 +372,7 @@ public class Main {
     private static void listPostsFromUser(User user) {
         for (Post p : user.getPosts()){
             System.out.println(p);
+            System.out.println("----------");
         }
     }
     //endregion

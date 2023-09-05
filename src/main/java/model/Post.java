@@ -3,7 +3,10 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Post {
     /*
@@ -62,12 +65,14 @@ public class Post {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String commentsString = comments.stream().map(Object::toString)
+                .collect(Collectors.joining("\n"));
 
         return "Post\n" +
                 "(" + publicationdate.format(formatter) + ") " +
                 owner.getName() + "\n" +
                 postContent + "\n" +
                 getCommentCount() + " comment/s.\n" +
-                comments.toString();
+                commentsString;
     }
 }
