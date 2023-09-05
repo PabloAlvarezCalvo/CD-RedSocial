@@ -42,9 +42,7 @@ public class Comment {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-        return "Comment{" +
-                "[" + publicationDate.format(formatter) +
-                "]" + owner.getName() + ": " + text +
-                '}';
+        return "[" + publicationDate.format(formatter) + "] " +
+                owner.getName() + ": " + text;
     }
 }
