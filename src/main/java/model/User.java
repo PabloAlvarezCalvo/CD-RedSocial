@@ -1,13 +1,14 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     //Contendrá nombre, una lista de los usuarios a los que sigue, lista de posts.
     //private long id;
     private String name;
-    private List<User> following;
-    private List<Post> publications;
+    private List<User> following = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     public User(String name){
         this.name = name;
@@ -25,9 +26,30 @@ public class User {
         return following;
     }
 
-    public List<Post> getPublications() {
-        return publications;
+    public void addFollowing(User u){
+        this.following.add(u);
     }
 
+    public void removeFollowing(User u) {
+        this.following.remove(u);
+    }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+    public void makePost(Post p){
+        posts.add(p);
+    }
+    public void removePosts(){
+        posts = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", following=" + following +
+                ", posts=" + posts +
+                '}';
+    }
 }
