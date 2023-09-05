@@ -55,7 +55,7 @@ public class Post {
 
     public void removeAllComments(){ this.comments = new ArrayList<>(); }
 
-    public int shotCommentCount(){
+    public int getCommentCount(){
         return comments.size();
     }
 
@@ -64,8 +64,10 @@ public class Post {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         return "Post\n" +
-                "[" + publicationdate.format(formatter) + "] " +
+                "(" + publicationdate.format(formatter) + ") " +
+                owner.getName() + "\n" +
                 postContent + "\n" +
-                "Comments:\n" + comments.toString();
+                getCommentCount() + " comment/s.\n" +
+                comments.toString();
     }
 }

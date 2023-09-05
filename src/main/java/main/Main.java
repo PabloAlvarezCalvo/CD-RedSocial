@@ -131,10 +131,10 @@ public class Main {
                 case 4: followUser(user);
                     break;
 
-                case 5: listPosts(user);
+                case 5: listPostsFromUser(user);
                     break;
 
-                case 6: listComments(user);
+                case 6: listCommentsFromUser(user);
                     break;
 
                 case 7: showCommentCount();
@@ -203,6 +203,7 @@ public class Main {
     //region Add Comment
     public static void addComment(User user){
         List<Post> availablePosts = user.getFollowingPosts();
+        availablePosts.addAll(user.getPosts());
 
         System.out.println("----------------------------------------");
         System.out.println("Posts from the users " + user.getName() + " follows.");
@@ -219,7 +220,6 @@ public class Main {
 
         Comment comment = new Comment(LocalDateTime.now(), Input.string("Type your comment:\n"), user);
         postToReply.addComment(comment);
-
     }
     //endregion
 
@@ -257,17 +257,15 @@ public class Main {
     //endregion
 
     //region List Posts
-    private static void listPosts(User u) {
+    private static void listPostsFromUser(User u) {
         for (Post p : u.getPosts()){
             System.out.println(p);
-
-            System.out.println("Total number of comments: " + p.getComments().size());
         }
     }
     //endregion
 
     //region List Comments
-    private static void listComments(User u){
+    private static void listCommentsFromUser(User u){
         for(Comment c : comments){
             if (c.getOwner().getName().equals(u.getName())){
                 System.out.println(c);
