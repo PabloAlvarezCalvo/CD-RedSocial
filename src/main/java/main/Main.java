@@ -1,6 +1,10 @@
 package main;
 
 import model.*;
+import model.content.*;
+import model.content.post_type.PostImage;
+import model.content.post_type.PostText;
+import model.content.post_type.PostVideo;
 import util.Input;
 
 import java.time.LocalDateTime;
@@ -10,16 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
+    private static final int MAX_POSTS_VIEW = 10;
     private static List<User> users;
 
     public static void main(String[] args) {
-        users = createUsers();
+        users = mockUserDB();
 
         menu();
     }
 
     //region Create User
-    private static List<User> createUsers() {
+    private static List<User> mockUserDB() {
         List<User> users = new ArrayList<>();
 
         User paco = new User("Paco");
@@ -107,11 +112,13 @@ public class Main {
         int option;
 
         do {
-            System.out.println("----------------------------------------");
+            System.out.println("========================================");
+            System.out.println("           SOCIAL NETWORK APP"           );
+            System.out.println("========================================");
             System.out.println("Select an option:");
             System.out.println("1.- Add an user.");
             System.out.println("2.- Select an user.");
-            System.out.println("3.- Salir.");
+            System.out.println("0.- Exit.");
             option = Input.integer();
 
             switch (option) {
@@ -126,16 +133,31 @@ public class Main {
                         } while (repeat);
                     break;
             }
-        } while (option != 3);
+        } while (option != 0);
     }
     //endregion
 
     //region Add user
     private static void addUser(){
-        User user = new User(Input.string("Type the name of the user:\n"));
+        boolean correctName = true;
+        User newUser = null;
+        do {
+            String userInputName = Input.string("Type the name of the user:\n");
+            for (User u : users) {
+                if (u.getName().equals(userInputName)){
+                    System.out.println("Error: An user with that name already exists. Choose a different one.");
+                    correctName = false;
+                    break;
+                } else {
+                    correctName = true;
+                    newUser = new User(userInputName);
+                    System.out.println("User: " + userInputName + " created successfully.");
+                }
+            }
 
-        users.add(user);
+        } while (!correctName);
 
+        users.add(newUser);
     }
     //endregion
 
@@ -165,18 +187,18 @@ public class Main {
 
         do {
             System.out.println("----------------------------------------");
-            System.out.println("1.- See last posts from users followed.");
+            System.out.println("1.- Read your feed.");
             System.out.println("2.- Suggested users to follow.");
             System.out.println("3.- Add a post.");
             System.out.println("4.- Add a comment.");
-            System.out.println("5.- Unfollow an user.");
-            System.out.println("6.- Follow an user.");
+            System.out.println("5.- Follow an user.");
+            System.out.println("6.- Unfollow an user.");
             System.out.println("7.- List all posts from this user.");
             System.out.println("8.- List all comments from this user.");
             System.out.println("9.- Delete posts from this user.");
             System.out.println("10.- Delete comments from this user.");
             System.out.println("11.- Select another user.");
-            System.out.println("12.- Exit.");
+            System.out.println("0.- Exit.");
             option = Input.integer();
 
             switch (option) {
@@ -193,10 +215,10 @@ public class Main {
                 case 4: addComment(user);
                     break;
 
-                case 5: unfollowUser(user);
+                case 5: followUser(user);
                     break;
 
-                case 6: followUser(user);
+                case 6: unfollowUser(user);
                     break;
 
                 case 7: listPostsFromUser(user);
@@ -211,16 +233,16 @@ public class Main {
                 case 10: deleteCommentByUser(user);
                     break;
 
-                case 11: return true;
+                case 11: return true; //Change user
 
-                case 12:
+                case 0: //Exit
                     break;
 
                 default:
                     System.out.println("Invalid option.");
                     break;
             }
-        } while (option != 12);
+        } while (option != 0);
 
         return false;
 
@@ -236,9 +258,9 @@ public class Main {
     private static void getLastPosts(User user){
         List<Post> availablePost = new ArrayList<>();
 
-        System.out.println("----------------------------------------");
-        System.out.println("Feed for " + user.getName());
-        System.out.println("----------------------------------------");
+        System.out.println("========================================");
+        System.out.println("          Feed for " + user.getName());
+        System.out.println("========================================");
 
         for (User following : user.getFollowing()){
             availablePost.addAll(following.getPosts());
@@ -248,7 +270,7 @@ public class Main {
                 .sorted(Comparator.comparing(Post::getPublicationdate).reversed())
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < 10 && i < sortedPosts.size(); i++){
+        for (int i = 0; i < MAX_POSTS_VIEW && i < sortedPosts.size(); i++){
             System.out.println(sortedPosts.get(i));
             System.out.println("----------");
         }
@@ -261,9 +283,13 @@ public class Main {
 
         List<User> suggestedUsers = new ArrayList<>();
 
+        //Making a list of all the accounts followed by the people this user follows
         for (User u : user.getFollowing()){
             suggestedUsers.addAll(u.getFollowing());
         }
+
+        //Removing people the user already follows
+        suggestedUsers.removeAll(user.getFollowing());
 
         for (User u : suggestedUsers){
             System.out.println(u.getName());
@@ -273,10 +299,12 @@ public class Main {
 
     //region Add Post
     private static void addPost(User user){
+        System.out.println("----------------------------------------");
         System.out.println("Select the type of post:");
         System.out.println("1. Text.");
         System.out.println("2. Image.");
         System.out.println("3. Video.");
+        System.out.println("----------------------------------------");
         int option = Input.integer();
 
         PostContent pc = null;
@@ -284,7 +312,6 @@ public class Main {
         switch (option){
             case 1:
                 pc = new PostText(Input.string("Write the text of the post:\n"));
-
                 break;
 
             case 2:
@@ -299,7 +326,7 @@ public class Main {
             case 3:
                 String videoTitle = Input.string("Write the title of the video:\n");
                 int quality = Input.integer("Write the quality of the video:\n");
-                int length = Input.integer("Write the length of the video:\n");
+                int length = Input.integer("Write the length of the video, in seconds:\n");
 
                 pc = new PostVideo(videoTitle, quality, length);
 
@@ -335,6 +362,21 @@ public class Main {
     }
     //endregion
 
+    //region Follow User
+    private static void followUser(User user){
+        for (User u : users){
+            System.out.println(u.getName());
+        }
+
+        String userToFollow = Input.string("Write the name of the user to follow:\n");
+        for (User u : users){
+            if (u.getName().equals(userToFollow)){
+                user.addFollowing(u);
+            }
+        }
+    }
+    //endregion
+
     //region Unfollow User
     private static void unfollowUser(User user){
         for (User u : user.getFollowing()){
@@ -350,21 +392,6 @@ public class Main {
         }
 
         user.removeFollowing(userToUnfollow);
-    }
-    //endregion
-
-    //region Follow User
-    private static void followUser(User user){
-        for (User u : users){
-            System.out.println(u.getName());
-        }
-
-        String userToFollow = Input.string("Write the name of the user to follow:\n");
-        for (User u : users){
-            if (u.getName().equals(userToFollow)){
-                user.addFollowing(u);
-            }
-        }
     }
     //endregion
 

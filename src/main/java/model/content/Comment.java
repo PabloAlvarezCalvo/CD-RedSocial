@@ -1,4 +1,6 @@
-package model;
+package model.content;
+
+import model.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -1,5 +1,7 @@
 package model;
 
+import model.content.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,9 @@ public class User {
         posts.removeIf(p -> p == postToDelete);
     }
     public void removePosts(){
-        posts = new ArrayList<>();
+        for (Post p : this.getPosts()){
+            removePost(p);
+        }
     }
 
     public List<Post> getFollowingPosts(){

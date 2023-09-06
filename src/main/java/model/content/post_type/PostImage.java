@@ -1,4 +1,6 @@
-package model;
+package model.content.post_type;
+
+import model.content.PostContent;
 
 public class PostImage extends PostContent {
     private String title;
