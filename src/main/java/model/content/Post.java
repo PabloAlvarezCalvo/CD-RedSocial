@@ -16,24 +16,26 @@ public class Post {
      * o un vídeo (que tendrá título, calidad y duración en segundos).
      */
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
     private User owner;
 
-    private LocalDateTime publicationdate;
+    private LocalDateTime publicationDate;
     private PostContent postContent;
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(LocalDateTime publicationdate, User owner, PostContent postContent) {
-        this.publicationdate = publicationdate;
+    public Post(LocalDateTime publicationDate, User owner, PostContent postContent) {
+        this.publicationDate = publicationDate;
         this.owner = owner;
         this.postContent = postContent;
     }
 
-    public LocalDateTime getPublicationdate() {
-        return publicationdate;
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
     }
 
-    public void setPublicationdate(LocalDateTime publicationdate) {
-        this.publicationdate = publicationdate;
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public PostContent getPostContent() {
@@ -64,12 +66,12 @@ public class Post {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
         String commentsString = comments.stream().map(Object::toString)
                 .collect(Collectors.joining("\n"));
 
         return "Post\n" +
-                "(" + publicationdate.format(formatter) + ") " +
+                "(" + publicationDate.format(formatter) + ") " +
                 owner.getName() + "\n" +
                 postContent + "\n" +
                 getCommentCount() + " comment/s.\n" +

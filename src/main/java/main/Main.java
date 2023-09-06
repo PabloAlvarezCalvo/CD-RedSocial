@@ -2,9 +2,9 @@ package main;
 
 import model.*;
 import model.content.*;
-import model.content.post_type.PostImage;
-import model.content.post_type.PostText;
-import model.content.post_type.PostVideo;
+import model.content.post_type.ImagePost;
+import model.content.post_type.TextPost;
+import model.content.post_type.VideoPost;
 import util.Input;
 
 import java.time.LocalDateTime;
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 public class Main {
     private static final int MAX_POSTS_VIEW = 10;
     private static List<User> users;
+    private static User currentUser = null;
 
     public static void main(String[] args) {
         users = mockUserDB();
-
         menu();
     }
 
@@ -44,51 +44,51 @@ public class Main {
 
         try {
 
-            Post post1 = new Post(LocalDateTime.now(), paco, new PostText("My first post!"));
+            Post post1 = new Post(LocalDateTime.now(), paco, new TextPost("", "My first post!"));
             paco.getPosts().add(post1);
             Thread.sleep(100);
 
-            Post post2 = new Post(LocalDateTime.now(), paco, new PostText("My 2nd post!"));
+            Post post2 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 2nd post!"));
             paco.getPosts().add(post2);
             Thread.sleep(100);
 
-            Post post3 = new Post(LocalDateTime.now(), paco, new PostText("My 3rd post!"));
+            Post post3 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 3rd post!"));
             paco.getPosts().add(post3);
             Thread.sleep(100);
 
-            Post post4 = new Post(LocalDateTime.now(), paco, new PostText("My 4th post!"));
+            Post post4 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 4th post!"));
             paco.getPosts().add(post4);
             Thread.sleep(100);
 
-            Post post5 = new Post(LocalDateTime.now(), paco, new PostText("My 5th post!"));
+            Post post5 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 5th post!"));
             paco.getPosts().add(post5);
             Thread.sleep(100);
 
-            Post post6 = new Post(LocalDateTime.now(), paco, new PostText("My 6th post!"));
+            Post post6 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 6th post!"));
             paco.getPosts().add(post6);
             Thread.sleep(100);
 
-            Post post7 = new Post(LocalDateTime.now(), paco, new PostText("My 7th post!"));
+            Post post7 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 7th post!"));
             paco.getPosts().add(post7);
             Thread.sleep(100);
 
-            Post post8 = new Post(LocalDateTime.now(), paco, new PostText("My 8th post!"));
+            Post post8 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 8th post!"));
             paco.getPosts().add(post8);
             Thread.sleep(100);
 
-            Post post9 = new Post(LocalDateTime.now(), paco, new PostText("My 9th post!"));
+            Post post9 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 9th post!"));
             paco.getPosts().add(post9);
             Thread.sleep(100);
 
-            Post post10 = new Post(LocalDateTime.now(), paco, new PostText("My 10th post!"));
+            Post post10 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 10th post!"));
             paco.getPosts().add(post10);
             Thread.sleep(100);
 
-            Post post11 = new Post(LocalDateTime.now(), paco, new PostText("My 11th post!"));
+            Post post11 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 11th post!"));
             paco.getPosts().add(post11);
             Thread.sleep(100);
 
-            Post post12 = new Post(LocalDateTime.now(), paco, new PostText("My 12th post!"));
+            Post post12 = new Post(LocalDateTime.now(), paco, new TextPost("", "My 12th post!"));
             paco.getPosts().add(post12);
             Thread.sleep(100);
 
@@ -113,11 +113,11 @@ public class Main {
 
         do {
             System.out.println("========================================");
-            System.out.println("           SOCIAL NETWORK APP"           );
+            System.out.println("           SOCIAL NETWORK APP           ");
             System.out.println("========================================");
             System.out.println("Select an option:");
-            System.out.println("1.- Add an user.");
-            System.out.println("2.- Select an user.");
+            System.out.println("1.- Register.");
+            System.out.println("2.- Login.");
             System.out.println("0.- Exit.");
             option = Input.integer();
 
@@ -129,7 +129,8 @@ public class Main {
                 case 2:
                         boolean repeat;
                         do {
-                            repeat = userActions(selectUser());
+                            selectUser();
+                            repeat = userActions();
                         } while (repeat);
                     break;
             }
@@ -162,7 +163,7 @@ public class Main {
     //endregion
 
     //region Select User
-    private static User selectUser(){
+    private static void selectUser(){
         for(User u : users) {
             System.out.println(u.getName());
         }
@@ -171,21 +172,25 @@ public class Main {
 
         for (User u : users) {
             if (u.getName().equals(userName)){
-                return u;
+                currentUser = u;
             }
         }
-
-        return null;
 
     }
     //endregion
 
     //region User Actions
     //region User Actions Menu
-    private static boolean userActions(User user){
+    private static boolean userActions(){
         int option;
 
+        if (currentUser == null) {
+            return true;
+        }
+
         do {
+            System.out.println("----------------------------------------");
+            System.out.println("Welcome, " + currentUser.getName());
             System.out.println("----------------------------------------");
             System.out.println("1.- Read your feed.");
             System.out.println("2.- Suggested users to follow.");
@@ -203,37 +208,38 @@ public class Main {
 
             switch (option) {
 
-                case 1: getLastPosts(user);
+                case 1: getLastPosts();
                     break;
 
-                case 2: usersSuggestions(user);
+                case 2: usersSuggestions();
                     break;
 
-                case 3: addPost(user);
+                case 3: addPost();
                     break;
 
-                case 4: addComment(user);
+                case 4: addComment();
                     break;
 
-                case 5: followUser(user);
+                case 5: followUser();
                     break;
 
-                case 6: unfollowUser(user);
+                case 6: unfollowUser();
                     break;
 
-                case 7: listPostsFromUser(user);
+                case 7: listPostsFromUser();
                     break;
 
-                case 8: listCommentsFromUser(user);
+                case 8: listCommentsFromUser();
                     break;
 
-                case 9: deletePostByUser(user);
+                case 9: deletePostByUser();
                     break;
 
-                case 10: deleteCommentByUser(user);
+                case 10: deleteCommentByUser();
                     break;
 
-                case 11: return true; //Change user
+                case 11: currentUser = null;
+                    return true; //Change user
 
                 case 0: //Exit
                     break;
@@ -253,21 +259,20 @@ public class Main {
 
     /**
      * Displays the latest (ordered by date) 10 posts the user can see from among the people they follows
-     * @param user
      */
-    private static void getLastPosts(User user){
+    private static void getLastPosts(){
         List<Post> availablePost = new ArrayList<>();
 
         System.out.println("========================================");
-        System.out.println("          Feed for " + user.getName());
+        System.out.println("          Feed for " + currentUser.getName());
         System.out.println("========================================");
 
-        for (User following : user.getFollowing()){
+        for (User following : currentUser.getFollowing()){
             availablePost.addAll(following.getPosts());
         }
 
         List<Post> sortedPosts = availablePost.stream()
-                .sorted(Comparator.comparing(Post::getPublicationdate).reversed())
+                .sorted(Comparator.comparing(Post::getPublicationDate).reversed())
                 .collect(Collectors.toList());
 
         for (int i = 0; i < MAX_POSTS_VIEW && i < sortedPosts.size(); i++){
@@ -278,18 +283,20 @@ public class Main {
     //endregion
 
     //region Users Suggestions
-    private static void usersSuggestions(User user){
+    private static void usersSuggestions(){
         System.out.println("Suggested users to follow:");
 
         List<User> suggestedUsers = new ArrayList<>();
 
         //Making a list of all the accounts followed by the people this user follows
-        for (User u : user.getFollowing()){
+        for (User u : currentUser.getFollowing()){
             suggestedUsers.addAll(u.getFollowing());
         }
 
+
         //Removing people the user already follows
-        suggestedUsers.removeAll(user.getFollowing());
+        suggestedUsers.removeAll(currentUser.getFollowing());
+        suggestedUsers.remove(currentUser);
 
         for (User u : suggestedUsers){
             System.out.println(u.getName());
@@ -298,7 +305,7 @@ public class Main {
     //endregion
 
     //region Add Post
-    private static void addPost(User user){
+    private static void addPost(){
         System.out.println("----------------------------------------");
         System.out.println("Select the type of post:");
         System.out.println("1. Text.");
@@ -311,7 +318,7 @@ public class Main {
 
         switch (option){
             case 1:
-                pc = new PostText(Input.string("Write the text of the post:\n"));
+                pc = new TextPost(Input.string("Write the title of the post:\n"), Input.string("Write the text of the post:\n"));
                 break;
 
             case 2:
@@ -319,7 +326,7 @@ public class Main {
                 int width = Input.integer("Write the width of the image:\n");
                 int height = Input.integer("Write the height of the image:\n");
 
-                pc = new PostImage(imageTitle, width, height);
+                pc = new ImagePost(imageTitle, width, height);
 
                 break;
 
@@ -328,24 +335,24 @@ public class Main {
                 int quality = Input.integer("Write the quality of the video:\n");
                 int length = Input.integer("Write the length of the video, in seconds:\n");
 
-                pc = new PostVideo(videoTitle, quality, length);
+                pc = new VideoPost(videoTitle, quality, length);
 
                 break;
         }
 
-        Post post = new Post(LocalDateTime.now(), user, pc);
+        Post post = new Post(LocalDateTime.now(), currentUser, pc);
 
-        user.makePost(post);
+        currentUser.makePost(post);
     }
     //endregion
 
     //region Add Comment
-    public static void addComment(User user){
-        List<Post> availablePosts = user.getFollowingPosts();
-        availablePosts.addAll(user.getPosts());
+    public static void addComment(){
+        List<Post> availablePosts = currentUser.getFollowingPosts();
+        availablePosts.addAll(currentUser.getPosts());
 
         System.out.println("----------------------------------------");
-        System.out.println("Posts from the users " + user.getName() + " follows.");
+        System.out.println("Posts from the users " + currentUser.getName() + " follows.");
         System.out.println("----------------------------------------");
         System.out.println("----------------------------------------");
 
@@ -357,13 +364,13 @@ public class Main {
         int postIndex = Input.integer("Type the index of the post to reply to:\n");
         Post postToReply = availablePosts.get(postIndex);
 
-        Comment comment = new Comment(LocalDateTime.now(), Input.string("Type your comment:\n"), user);
+        Comment comment = new Comment(LocalDateTime.now(), Input.string("Type your comment:\n"), currentUser);
         postToReply.addComment(comment);
     }
     //endregion
 
     //region Follow User
-    private static void followUser(User user){
+    private static void followUser(){
         for (User u : users){
             System.out.println(u.getName());
         }
@@ -371,33 +378,33 @@ public class Main {
         String userToFollow = Input.string("Write the name of the user to follow:\n");
         for (User u : users){
             if (u.getName().equals(userToFollow)){
-                user.addFollowing(u);
+                currentUser.addFollowing(u);
             }
         }
     }
     //endregion
 
     //region Unfollow User
-    private static void unfollowUser(User user){
-        for (User u : user.getFollowing()){
+    private static void unfollowUser(){
+        for (User u : currentUser.getFollowing()){
             System.out.println(u.getName());
         }
 
         String stringUserToUnfollow = Input.string("Write the name of the user to unfollow:\n");
         User userToUnfollow = null;
-        for (User u : user.getFollowing()){
+        for (User u : currentUser.getFollowing()){
             if (u.getName().equals(stringUserToUnfollow)){
                 userToUnfollow = u;
             }
         }
 
-        user.removeFollowing(userToUnfollow);
+        currentUser.removeFollowing(userToUnfollow);
     }
     //endregion
 
     //region List Posts
-    private static void listPostsFromUser(User user) {
-        for (Post p : user.getPosts()){
+    private static void listPostsFromUser() {
+        for (Post p : currentUser.getPosts()){
             System.out.println(p);
             System.out.println("----------");
         }
@@ -405,13 +412,13 @@ public class Main {
     //endregion
 
     //region List Comments
-    private static void listCommentsFromUser(User user){
+    private static void listCommentsFromUser(){
         List<Comment> commentsFromUser = new ArrayList<>();
 
         for (User u : users){
             for (Post p : u.getPosts()){
                 for (Comment c : p.getComments()) {
-                    if (c.getOwner().getName().equals(user.getName())){
+                    if (c.getOwner().getName().equals(currentUser.getName())){
                         commentsFromUser.add(c);
                     }
                 }
@@ -419,7 +426,7 @@ public class Main {
         }
 
         System.out.println("----------------------------------------");
-        System.out.println("Comments from user: " + user.getName());
+        System.out.println("Comments from user: " + currentUser.getName());
         System.out.println("----------------------------------------");
         for (Comment c : commentsFromUser){
             System.out.println(c.toString());
@@ -428,16 +435,16 @@ public class Main {
     //endregion
 
     //region Delete post by user
-    private static void deletePostByUser(User user){
-        user.removePosts();
+    private static void deletePostByUser(){
+        currentUser.removePosts();
     }
     //endregion
 
     //region Delete comments by user
-    private static void deleteCommentByUser(User user){
+    private static void deleteCommentByUser(){
         for (User u : users) {
             for (Post p : u.getPosts()){
-                p.getComments().removeIf(c -> c.getOwner().getName().equals(user.getName()));
+                p.getComments().removeIf(c -> c.getOwner().getName().equals(currentUser.getName()));
             }
         }
     }

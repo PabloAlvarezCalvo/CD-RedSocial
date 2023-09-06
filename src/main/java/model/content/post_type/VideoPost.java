@@ -2,23 +2,14 @@ package model.content.post_type;
 
 import model.content.PostContent;
 
-public class PostVideo extends PostContent {
-    private String title;
+public class VideoPost extends PostContent {
     private int quality;
     private int length;
 
-    public PostVideo(String title, int quality, int length) {
-        this.title = title;
+    public VideoPost(String title, int quality, int length) {
+        super(title);
         this.quality = quality;
         this.length = length;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getQuality() {
@@ -40,7 +31,7 @@ public class PostVideo extends PostContent {
     @Override
     public String toString() {
         return "Video. " +
-                "Title: " + title +
+                "Title: " + super.getTitle() +
                 ", quality: " + quality +
                 ", length: " + length / 3600 + ":" + ((length % 3600) / 60) + ":" + length % 60;
     }

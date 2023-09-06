@@ -2,10 +2,11 @@ package model.content.post_type;
 
 import model.content.PostContent;
 
-public class PostText extends PostContent {
+public class TextPost extends PostContent {
     private String text;
 
-    public PostText(String text) {
+    public TextPost(String title, String text) {
+        super(title);
         this.text = text;
     }
 
@@ -19,6 +20,6 @@ public class PostText extends PostContent {
 
     @Override
     public String toString() {
-        return "Text: \n" + text;
+        return "Title: " + super.getTitle() + "\nText: \n" + text;
     }
 }

@@ -2,23 +2,14 @@ package model.content.post_type;
 
 import model.content.PostContent;
 
-public class PostImage extends PostContent {
-    private String title;
+public class ImagePost extends PostContent {
     private int width;
     private int height;
 
-    public PostImage(String title, int width, int height) {
-        this.title = title;
+    public ImagePost(String title, int width, int height) {
+        super(title);
         this.width = width;
         this.height = height;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getWidth() {
@@ -40,7 +31,7 @@ public class PostImage extends PostContent {
     @Override
     public String toString() {
         return "Image. " +
-                "Title: " + title +
+                "Title: " + super.getTitle() +
                 ", width: " + width +
                 ", height: " + height;
     }
