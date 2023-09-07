@@ -1,4 +1,4 @@
-package com.campusdual.socialnetwork.main.model.content;
+package com.campusdual.socialnetwork.model.content;
 
 public abstract class PostContent {
     private String title;

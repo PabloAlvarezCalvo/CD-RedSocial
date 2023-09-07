@@ -1,6 +1,6 @@
-package com.campusdual.socialnetwork.main.model.content.post_type;
+package com.campusdual.socialnetwork.model.content.post_type;
 
-import com.campusdual.socialnetwork.main.model.content.PostContent;
+import com.campusdual.socialnetwork.model.content.PostContent;
 
 public class ImagePost extends PostContent {
     private int width;

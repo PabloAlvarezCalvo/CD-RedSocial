@@ -1,6 +1,6 @@
-package com.campusdual.socialnetwork.main.model.content;
+package com.campusdual.socialnetwork.model.content;
 
-import com.campusdual.socialnetwork.main.model.User;
+import com.campusdual.socialnetwork.model.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
