@@ -7,7 +7,7 @@ import com.campusdual.socialnetwork.model.content.PostContent;
 import com.campusdual.socialnetwork.model.content.post_type.ImagePost;
 import com.campusdual.socialnetwork.model.content.post_type.TextPost;
 import com.campusdual.socialnetwork.model.content.post_type.VideoPost;
-import com.campusdual.socialnetwork.util.util.Input;
+import com.campusdual.socialnetwork.util.Input;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

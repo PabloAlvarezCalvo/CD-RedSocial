@@ -1,4 +1,4 @@
-package com.campusdual.socialnetwork.util.util;
+package com.campusdual.socialnetwork.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
