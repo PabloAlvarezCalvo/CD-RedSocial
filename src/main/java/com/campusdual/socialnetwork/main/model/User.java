@@ -1,6 +1,6 @@
-package model;
+package com.campusdual.socialnetwork.main.model;
 
-import model.content.Post;
+import com.campusdual.socialnetwork.main.model.content.Post;
 
 import java.util.ArrayList;
 import java.util.List;

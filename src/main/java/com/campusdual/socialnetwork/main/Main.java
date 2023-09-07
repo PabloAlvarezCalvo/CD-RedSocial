@@ -1,11 +1,14 @@
-package main;
+package com.campusdual.socialnetwork.main;
 
+import com.campusdual.socialnetwork.main.model.User;
+import com.campusdual.socialnetwork.main.model.content.Comment;
+import com.campusdual.socialnetwork.main.model.content.Post;
+import com.campusdual.socialnetwork.main.model.content.PostContent;
 import model.*;
-import model.content.*;
-import model.content.post_type.ImagePost;
-import model.content.post_type.TextPost;
-import model.content.post_type.VideoPost;
-import util.Input;
+import com.campusdual.socialnetwork.main.model.content.post_type.ImagePost;
+import com.campusdual.socialnetwork.main.model.content.post_type.TextPost;
+import com.campusdual.socialnetwork.main.model.content.post_type.VideoPost;
+import com.campusdual.socialnetwork.main.util.Input;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

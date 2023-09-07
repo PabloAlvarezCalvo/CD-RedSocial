@@ -1,6 +1,6 @@
-package model.content.post_type;
+package com.campusdual.socialnetwork.main.model.content.post_type;
 
-import model.content.PostContent;
+import com.campusdual.socialnetwork.main.model.content.PostContent;
 
 public class VideoPost extends PostContent {
     private int quality;
